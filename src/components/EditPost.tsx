@@ -1,12 +1,12 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
-import axiosAPI from '../axiosAPI.ts';
-import { Button, Container, Form } from 'react-bootstrap';
+import { useNavigate, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import axiosAPI from "../axiosAPI.ts";
+import { Button, Container, Form } from "react-bootstrap";
 
 const EditPost = () => {
-  const {id} = useParams<{ id: string }>();
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
+  const { id } = useParams<{ id: string }>();
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
     const fetchPost = async () => {
@@ -16,7 +16,7 @@ const EditPost = () => {
         setTitle(postData.title);
         setBody(postData.body);
       } catch (error) {
-        console.error('error fetching post:', error);
+        console.error("error fetching post:", error);
       }
     };
     (async () => {
@@ -26,12 +26,16 @@ const EditPost = () => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
-      await axiosAPI.put(`/posts/${id}.json`, {title, body, createdAt: new Date().toISOString()});
+      await axiosAPI.put(`/posts/${id}.json`, {
+        title,
+        body,
+        createdAt: new Date().toISOString(),
+      });
       navigate(`/posts/${id}`);
     } catch (error) {
-      console.error('error updating post:', error);
+      console.error("error updating post:", error);
     }
-  }
+  };
   return (
     <Container>
       <h1 className="text-primary my-4">Редактировать пост</h1>
@@ -55,7 +59,9 @@ const EditPost = () => {
             required
           />
         </Form.Group>
-        <Button variant='primary' type='submit' className='mt-3'>Сохранить</Button>
+        <Button variant="primary" type="submit" className="mt-3">
+          Сохранить
+        </Button>
       </Form>
     </Container>
   );
