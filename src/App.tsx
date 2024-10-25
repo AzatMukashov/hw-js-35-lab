@@ -1,35 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import { Route, BrowserRouter as Router, Routes, NavLink } from 'react-router-dom';
+import { Container, Nav, Navbar } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Home from './components/Home.tsx';
+import About from './components/About.tsx';
+import Contact from './components/Contact.tsx';
+import NewPost from './components/NewPost.tsx';
+import PostDetail from './components/PostDetail.tsx';
+import EditPost from './components/EditPost.tsx';
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
   return (
-    <>
+    <Router>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <Navbar bg="primary" variant="dark" expand="lg">
+          <Container>
+            <Navbar.Brand href="/">Мой вебсайт</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="mr-auto">
+                <Nav.Link as={NavLink} to="/" end>Дом</Nav.Link>
+                <Nav.Link as={NavLink} to="/new-post" end>Добавить пост</Nav.Link>
+                <Nav.Link as={NavLink} to="/about" end>О нас</Nav.Link>
+                <Nav.Link as={NavLink} to="/contact" end>Контакт</Nav.Link>
+              </Nav>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
+        <Container className="mt-4">
+          <Routes>
+            <Route path="/" element={<Home/>}/>
+            <Route path="/new-post" element={<NewPost/>}/>
+            <Route path="/about" element={<About/>}/>
+            <Route path="/contact" element={<Contact/>}/>
+            <Route path="/posts/:id" element={<PostDetail/>}/>
+            <Route path="/posts/:id/edit" element={<EditPost/>}/>
+          </Routes>
+        </Container>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
-
+    </Router>
+  );
+};
 export default App
